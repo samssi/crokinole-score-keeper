@@ -14,6 +14,7 @@ def draw(image):
     renderCircle(image, "15")
     renderCircle(image, "10")
     renderCircle(image, "5")
+    renderScore(image)
 
     circle_storage.empty()
     button_storage.empty()
@@ -26,4 +27,11 @@ def renderCircle(image, identifier):
 def renderButton(image, identifier, text):
     if button_storage.get() is not None:
         for (x, y, radius, color) in button_storage.buttons:
-            cv2.putText(image, text, (x, y), font_type, font_scale, font_color, font_weight, font_line)
+            renderText(image, text, (x, y))
+
+def renderScore(image):
+    score_text = "Total score of: x"
+    renderText(image, score_text, (20, 20), (255, 255, 255))
+
+def renderText(image, text, coordinates, color=font_color):
+    cv2.putText(image, text, coordinates, font_type, font_scale, color, font_weight, font_line)
