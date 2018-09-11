@@ -9,6 +9,7 @@ font_type = cv2.FONT_HERSHEY_SIMPLEX
 font_scale = 0.7
 font_weight = 2
 font_line = cv2.LINE_AA
+check_20_variance = 5
 
 def draw(image):
     #renderCircle(image, "button")
@@ -30,7 +31,10 @@ def renderCircle(image, identifier):
 def renderButton(image, identifier, text):
     if button_storage.get() is not None:
         for (x, y, radius, color) in button_storage.buttons:
-            if _checkPoints("15", x, y, radius):
+            if _check20(x, y, radius):
+                score_storage.add(20)
+                renderText(image, "20", (x, y))
+            elif _checkPoints("15", x, y, radius):
                 score_storage.add(15)
                 renderText(image, "15", (x, y))
             elif _checkPoints("10", x, y, radius):
@@ -41,6 +45,12 @@ def renderButton(image, identifier, text):
                 renderText(image, "5", (x, y))
             else:
                 renderText(image, text, (x, y))
+
+def _check20(buttonX, buttonY, buttonR):
+    circleX, circleY, circleR, color = circle_storage.get("15")
+    xDiff = math.fabs(circleX - buttonX)
+    yDiff = math.fabs(circleY - buttonY)
+    return (xDiff < check_20_variance) and (yDiff < check_20_variance)
 
 def _checkPoints(identifier, buttonX, buttonY, buttonR):
     circleX, circleY, circleR, color = circle_storage.get(identifier)
