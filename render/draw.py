@@ -2,6 +2,7 @@ from state import circle_storage
 from state import button_storage
 from state import score_storage
 import cv2
+import math
 
 font_color = (105, 100, 230)
 font_type = cv2.FONT_HERSHEY_SIMPLEX
@@ -29,12 +30,23 @@ def renderCircle(image, identifier):
 def renderButton(image, identifier, text):
     if button_storage.get() is not None:
         for (x, y, radius, color) in button_storage.buttons:
-            # TODO: polar coordinates of points circles
-            if (x > 500 and y > 500) and (x < 900 and y < 900):
-                score_storage.add(15)
-                renderText(image, "15", (x, y))
+            if _checkPoints("10", x, y, radius):
+                score_storage.add(10)
+                renderText(image, "10", (x, y))
             else:
                 renderText(image, text, (x, y))
+
+def _checkPoints(identifier, buttonX, buttonY, buttonR):
+    circleX, circleY, circleR, color = circle_storage.get(identifier)
+    sideX = math.fabs(circleX - buttonX)
+    sideY = math.fabs(circleY - buttonY)
+    hypotenuse = _calculate_hypotenuse(sideX, sideY)
+    return hypotenuse < (circleR - buttonR)
+
+def _calculate_hypotenuse(sideX, sideY):
+    pow = math.pow(sideX, 2) + math.pow(sideY, 2)
+    return round(math.sqrt(pow), 3)
+
 
 def renderScore(image):
     score_text = f"Total score of:{score_storage.get()}"

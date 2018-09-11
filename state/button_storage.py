@@ -1,5 +1,6 @@
 buttons = []
 
+# x, y, radius, color
 def add(tuple):
     buttons.append(tuple)
 

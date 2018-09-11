@@ -1,5 +1,6 @@
 circleDictionary = {}
 
+# x, y, radius, color
 def put(identifier, tuple):
     circleDictionary[identifier] = tuple
 
