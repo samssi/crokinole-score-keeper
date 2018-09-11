@@ -30,9 +30,15 @@ def renderCircle(image, identifier):
 def renderButton(image, identifier, text):
     if button_storage.get() is not None:
         for (x, y, radius, color) in button_storage.buttons:
-            if _checkPoints("10", x, y, radius):
+            if _checkPoints("15", x, y, radius):
+                score_storage.add(15)
+                renderText(image, "15", (x, y))
+            elif _checkPoints("10", x, y, radius):
                 score_storage.add(10)
                 renderText(image, "10", (x, y))
+            elif _checkPoints("5", x, y, radius):
+                score_storage.add(5)
+                renderText(image, "5", (x, y))
             else:
                 renderText(image, text, (x, y))
 
