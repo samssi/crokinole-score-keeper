@@ -5,7 +5,7 @@ clean:
 	@rm -rf .venv
 
 .crokinole-score-keeper/bin/activate: requirements.txt
-	@test -d .crokinole-score-keeper || python3.6 -m venv .crokinole-score-keeper
+	@test -d .crokinole-score-keeper || python3 -m venv .crokinole-score-keeper
 	.crokinole-score-keeper/bin/pip install --upgrade pip
 	.crokinole-score-keeper/bin/pip install --no-cache-dir -Ur requirements.txt || exit -1
 	touch .crokinole-score-keeper/bin/activate
