@@ -12,7 +12,6 @@ font_line = cv2.LINE_AA
 check_20_variance = 5
 
 def draw(image):
-    #renderCircle(image, "button")
     renderCircle(image, "15")
     renderCircle(image, "10")
     renderCircle(image, "5")
@@ -53,9 +52,6 @@ def _button(x, y, radius, image):
         renderText(image, f"0: {color}", (x, y))
 
 def _sample_color(y, x, radius, image):
-    #hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    b, g, r = image[x + radius - 10, y]
-
     if _sample_for_black(x, y, radius, image):
         return "black"
     elif _sample_for_blue(x, y , radius, image):
@@ -64,9 +60,9 @@ def _sample_color(y, x, radius, image):
         return "unknown"
 
 def _sample_for_black(x, y, radius, image):
-    for i in range(15):
+    for i in range(13):
         b, g, r = image[x + radius - i, y]
-        if (0 < r < 105) and (0 < g < 80) and (0 < b < 80):
+        if (0 < r < 105) and (0 < g < 80) and (0 < b < 35):
             return True
     return False
 
