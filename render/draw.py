@@ -16,7 +16,7 @@ def draw(image):
     renderCircle(image, "15")
     renderCircle(image, "10")
     renderCircle(image, "5")
-    renderButton(image, "button", "0")
+    renderButton(image)
     renderScore(image)
 
     circle_storage.empty()
@@ -28,23 +28,54 @@ def renderCircle(image, identifier):
         x, y, radius, color = circle_storage.get(identifier)
         cv2.circle(image, (x, y), radius, color, 4)
 
-def renderButton(image, identifier, text):
+def renderButton(image):
     if button_storage.get() is not None:
         for (x, y, radius, color) in button_storage.buttons:
-            if _check20(x, y, radius):
-                score_storage.add(20)
-                renderText(image, "20", (x, y))
-            elif _checkPoints("15", x, y, radius):
-                score_storage.add(15)
-                renderText(image, "15", (x, y))
-            elif _checkPoints("10", x, y, radius):
-                score_storage.add(10)
-                renderText(image, "10", (x, y))
-            elif _checkPoints("5", x, y, radius):
-                score_storage.add(5)
-                renderText(image, "5", (x, y))
-            else:
-                renderText(image, text, (x, y))
+            _button(x, y, radius, image)
+
+def _button(x, y, radius, image):
+    color = _sample_color(x, y, radius, image)
+    if color is "unknown":
+        pass
+    elif _check20(x, y, radius):
+        score_storage.add(20, color)
+        renderText(image, f"20: {color}", (x, y))
+    elif _checkPoints("15", x, y, radius):
+        score_storage.add(15, color)
+        renderText(image, f"15: {color}", (x, y))
+    elif _checkPoints("10", x, y, radius):
+        score_storage.add(10, color)
+        renderText(image, f"10: {color}", (x, y))
+    elif _checkPoints("5", x, y, radius):
+        score_storage.add(5, color)
+        renderText(image, f"5: {color}", (x, y))
+    else:
+        renderText(image, f"0: {color}", (x, y))
+
+def _sample_color(y, x, radius, image):
+    #hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    b, g, r = image[x + radius - 10, y]
+
+    if _sample_for_black(x, y, radius, image):
+        return "black"
+    elif _sample_for_blue(x, y , radius, image):
+        return "blue"
+    else:
+        return "unknown"
+
+def _sample_for_black(x, y, radius, image):
+    for i in range(15):
+        b, g, r = image[x + radius - i, y]
+        if (0 < r < 105) and (0 < g < 80) and (0 < b < 80):
+            return True
+    return False
+
+def _sample_for_blue(x, y, radius, image):
+    for i in range(30):
+        b, g, r = image[x + radius - i, y]
+        if (0 < r < 104) and (50 < g < 204) and (1 < b < 255):
+            return True
+    return False
 
 def _check20(buttonX, buttonY, buttonR):
     circleX, circleY, circleR, color = circle_storage.get("15")
@@ -65,8 +96,12 @@ def _calculate_hypotenuse(sideX, sideY):
 
 
 def renderScore(image):
-    score_text = f"Total score of:{score_storage.get()}"
+    score_text = f"Total score of: {score_storage.score}"
+    team1_score_text = f"Team 1, score of: {score_storage.team1_score}"
+    team2_score_text = f"Team 2. score of: {score_storage.team2_score}"
     renderText(image, score_text, (20, 20), (255, 255, 255))
+    renderText(image, team1_score_text, (20, 45), (255, 0, 0))
+    renderText(image, team2_score_text, (20, 70), (0, 0, 0))
 
 def renderText(image, text, coordinates, color=font_color):
     cv2.putText(image, text, coordinates, font_type, font_scale, color, font_weight, font_line)
