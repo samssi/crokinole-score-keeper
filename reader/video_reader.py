@@ -8,33 +8,34 @@ cap = cv2.VideoCapture('crok.mp4')
 
 import numpy
 
-#cap.set(cv2.CAP_PROP_FPS, 1)
+# cap.set(cv2.CAP_PROP_FPS, 1)
 
-#fourcc = cv2.VideoWriter_fourcc(*'X264')
-#out = cv2.VideoWriter('output.mp4',fourcc, 20.0, (640,480))
+# fourcc = cv2.VideoWriter_fourcc(*'X264')
+# out = cv2.VideoWriter('output.mp4',fourcc, 20.0, (640,480))
 
 
-#while (cap.isOpened()):
+# while (cap.isOpened()):
 
 frame_nbr = 0
 
+
 def start():
-        while True:
-            global frame_nbr
-            frame_nbr = frame_nbr + 1
+    while True:
+        global frame_nbr
+        frame_nbr = frame_nbr + 1
 
-            _, frame = cap.read()
+        _, frame = cap.read()
 
-            if frame_nbr > frame_limit:
-                detect.detectCircles(frame)
-                draw.draw(frame)
-                cv2.imshow("frame", frame)
+        if frame_nbr > frame_limit:
+            detect.detectCircles(frame)
+            draw.draw(frame)
+            cv2.imshow("frame", frame)
 
-                frame_nbr = 0
+            frame_nbr = 0
 
-            k = cv2.waitKey(5) & 0xFF
-            if k == 27:
-                break
+        k = cv2.waitKey(5) & 0xFF
+        if k == 27:
+            break
 
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

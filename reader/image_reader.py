@@ -1,6 +1,7 @@
 from detect import detect_objects as detect
 import cv2
 
+
 def start():
     image = cv2.imread('crok.jpg')
 

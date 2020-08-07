@@ -8,6 +8,7 @@ cap = cv2.VideoCapture('rtsp://192.168.1.121/live/ch0')
 
 frame_nbr = 0
 
+
 def start():
     while True:
         global frame_nbr

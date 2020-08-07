@@ -1,2 +1,3 @@
 .crokinole-score-keeper
 .idea
+*/__pycache__/
