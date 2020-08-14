@@ -6,10 +6,21 @@ def detectCircles(frame):
     grayscale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # grayscale = cv2.medianBlur(grayscale, 5)
-    # grayscaleWithBlur = cv2.GaussianBlur(grayscale, (15,15), 0)
+    #grayscale = cv2.GaussianBlur(grayscale, (15, 15), 0)
 
-    line15 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 100, param1=50,
-                              param2=30, minRadius=130, maxRadius=140)
+#    line15 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 100, param1=50,
+#                              param2=30, minRadius=130, maxRadius=140)
+#    line10 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 100, param1=50,
+#                              param2=47, minRadius=275, maxRadius=280)
+#    line5 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1.2, 500, param1=50,
+#                             param2=30, minRadius=430, maxRadius=435)
+#
+#    button = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 20, param1=50,
+#                              param2=30, minRadius=20, maxRadius=25)
+
+
+    line15 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 100, param1=37,
+                              param2=38, minRadius=80, maxRadius=90)
     line10 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 100, param1=50,
                               param2=47, minRadius=275, maxRadius=280)
     line5 = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1.2, 500, param1=50,
@@ -17,6 +28,7 @@ def detectCircles(frame):
 
     button = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 20, param1=50,
                               param2=30, minRadius=20, maxRadius=25)
+
     # bank = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 20, param1=50, param2=30, minRadius=18, maxRadius=30)
     # hole = cv2.HoughCircles(grayscale, cv2.HOUGH_GRADIENT, 1, 20, param1=50, param2=30, minRadius=15, maxRadius=17)
 
